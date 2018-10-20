@@ -1,11 +1,14 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+import express from 'express'
+import bodyParser from 'body-parser'
 
 //서버 생성
-var app = express();
+let app = express();
+
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+  limit: '1gb', extended: false
 }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 //서버 실행
