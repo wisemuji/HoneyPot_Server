@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
 
-mongoose.connect('mongodb://localhost/MockSal');
+mongoose.connect('mongodb://localhost/honeypot', { useNewUrlParser: true }).then(() => {
+console.log("Connected to Database");
+}).catch((err) => {
+    console.log("Not Connected to Database ERROR! ", err);
+});
 mongoose.Promise = global.Promise;
+
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -24,6 +29,6 @@ require('./err')(UsersSchema);
 
 var Users = mongoose.model("users", UsersSchema);
 
-exports.Users = Users;
+export {Users};
 
 export default db;
