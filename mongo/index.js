@@ -15,7 +15,8 @@ db.once('open', function callback () { console.log("Mongo On"); });
 var UsersSchema = mongoose.Schema({
   id: {type: String}, //아이디
   passwd: {type: String}, //비밀번호
-  profile_img: {type: String}, // url을 넣으주면됨
+  token : {type : String}, // 소셜 로그인 시 사용될 토큰 혹은 자동로그인.
+  profile_img: {type: String}, // url을 넣어주면됨
   school: {type: String}, //학교
   grade: {type: String}, //학년
   field: {type: String}, //분야
