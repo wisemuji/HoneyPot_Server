@@ -18,7 +18,7 @@ var UsersSchema = mongoose.Schema({
   token : {type : String}, // 소셜 로그인 시 사용될 토큰 혹은 자동로그인.
   profile_img: {type: String}, // url을 넣어주면됨
   school: {type: String}, //학교
-  grade: {type: String}, //학년
+  grade: {type: Number}, //학년
   field: {type: String}, //분야
   job: {type: String}, //직군
   skill_set: {type: String}, //스킬셋
