@@ -21,7 +21,9 @@ let passport = require('./passport')(Users);
 // let auth = require('./routes/auth/auth')(app);
 // app.use('/', auth);
 // var router = require('./routes')(app, Users);
-
+app.post('/test', function(req, res){
+  console.log(req.body);
+});
 //서버 실행
 const PORT = 8888;
 app.listen(PORT, function(){

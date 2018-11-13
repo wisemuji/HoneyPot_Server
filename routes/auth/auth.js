@@ -23,8 +23,13 @@ module.exports = (app, Users, passport, rndstring)=>{
   })
   .post('/delUser', async (req,res)=>{
     console.log('post:delUser');
-    var result = await Users.remove({token : req.body.token})
+    var result = await Users.deleteOne({token : req.body.token})
+      console.log(req.body);
     if(!result.ok) return res.status(500).json({message : "ERR!"})
     else return res.status(200).json({message : "success!"})
+  })
+  .post('/aa', async(req,res)=>{
+    var result = await Users.find()
+    res.send(result)
   })
 };
