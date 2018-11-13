@@ -25,6 +25,18 @@ var UsersSchema = mongoose.Schema({
   comment: {type: String}, //자기소개
   rank: {type: Number} //등급
 });
+// {
+// "id": "ksh6906",
+// "passwd": "12131",
+//   "profile_img": "dummy.url", // url을 넣어주면됨
+//   "school": "mirim", //학교
+//   "grade": 2, //학년
+//   "field": "game", //분야
+//   "job": "developer", //직군
+//   "skill_set": "c++", //스킬셋
+//   "comment": "hello", //자기소개
+//   "rank": "A" //등급
+// }
 
 require('./err')(UsersSchema);
 
