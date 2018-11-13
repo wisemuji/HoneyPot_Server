@@ -18,12 +18,14 @@ import {Users} from './mongo';
 let passport = require('./passport')(Users);
 
 //라우터
-let auth = require('./routes/auth/auth')(app);
-app.use('/', auth);
-var router = require('./routes')(app, Users);
+// let auth = require('./routes/auth/auth')(app);
+// app.use('/', auth);
+// var router = require('./routes')(app, Users);
 
 //서버 실행
 const PORT = 8888;
 app.listen(PORT, function(){
   console.log('server running');
 });
+
+require('./routes/auth/auth')(app, Users, passport, rndstring);
