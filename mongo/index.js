@@ -13,8 +13,9 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () { console.log("Mongo On"); });
 
 var UsersSchema = mongoose.Schema({
-  id: {type: String}, //아이디
+  email: {type: String}, //이메일(아이디)
   passwd: {type: String}, //비밀번호
+  name: {type: String}, //이름
   token : {type : String}, // 소셜 로그인 시 사용될 토큰 혹은 자동로그인.
   profile_img: {type: String}, // url을 넣어주면됨
   school: {type: String}, //학교
@@ -26,8 +27,9 @@ var UsersSchema = mongoose.Schema({
   rank: {type: Number} //등급
 });
 // {
-// "id": "ksh6906",
+// "email": "ksh6906",
 // "passwd": "12131",
+// "name": "김수현",
 //   "profile_img": "dummy.url", // url을 넣어주면됨
 //   "school": "mirim", //학교
 //   "grade": 2, //학년
