@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(path.join(__dirname, 'public')));
 
 //module setting
-import {Users} from './mongo';
+import { Users, Hackathons } from './mongo';
 let passport = require('./passport')(Users);
 
 //라우터

@@ -32,4 +32,19 @@ module.exports = (app, Users, passport, rndstring)=>{
     var result = await Users.find()
     res.send(result)
   })
+  .get('/auto/:token', async(req,res)=>{
+    var result = await Users.findOne({token : req.params.token})
+    if(!result) return res.status(404).json({message : "User Not Found!"})
+    var data = {
+      token : result.token,
+      triMandalChk : result.triangleMandalArt.triangleMandalChk,
+      name : result.name,
+      title : result.userMandalArt.title,
+      startDay : result.userMandalArt.startDay,
+      MandalChk : result.MandalChk,
+      achievement : result.userMandalArt.achievement,
+      triTitle : result.triangleMandalArt.title
+    }
+    return res.status(200).json({data : data})
+  })
 };

@@ -17,33 +17,46 @@ var UsersSchema = mongoose.Schema({
   passwd: {type: String}, //비밀번호
   name: {type: String}, //이름
   token : {type : String}, // 소셜 로그인 시 사용될 토큰 혹은 자동로그인.
-  profile_img: {type: String}, // url을 넣어주면됨
+  profile_img: {type: String}, // 프로필 사진, url을 넣어주면됨
   school: {type: String}, //학교
-  grade: {type: Number}, //학년
-  field: {type: String}, //분야
-  job: {type: String}, //직군
+  fields: [{
+    type: String,
+    enum : ['app','vr','game','iot','etc'],
+    default: 'etc'
+  }], //관심 분야
+  jobs: [{
+    type: String,
+    enum : ['pm','developer','designer','etc'],
+    default: 'etc'
+  }], //직군
   skill_set: {type: String}, //스킬셋
-  comment: {type: String}, //자기소개
-  rank: {type: Number} //등급
+  github: {type: String}, //깃허브 주소
+  favorites: [{
+    type: String //즐겨찾기한 해커톤 - 토큰으로 저장
+  }],
+  attendance: [{
+    type: String //참가했던 해커톤 - 토큰으로 저장
+  }]
 });
-// {
-// "email": "ksh6906",
-// "passwd": "12131",
-// "name": "김수현",
-//   "profile_img": "dummy.url", // url을 넣어주면됨
-//   "school": "mirim", //학교
-//   "grade": 2, //학년
-//   "field": "game", //분야
-//   "job": "developer", //직군
-//   "skill_set": "c++", //스킬셋
-//   "comment": "hello", //자기소개
-//   "rank": "A" //등급
-// }
 
-require('./err')(UsersSchema);
+var HackathonSchema = mongoose.Schema({
+  start_day: { type: Date, default: Date.now }, //행사 시작하는 날짜
+  end_day: { type: Date, default: Date.now }, //행사 끝나는 날짜
+  start_apply: { type: Date, default: Date.now }, //신청 시작하는 날짜
+  end_apply: { type: Date, default: Date.now }, //신청 끝나는 날짜
+  host: { type: String }, //주최
+  token : {type : String}, //해커톤 토큰
+  location: { type: String }, //행사 장소
+  summary: { type: String }, //행사 개요
+  field: { type: String }, //관심 분야
+  views: { type: Number } //조회수
+});
+
+require('./err')(UsersSchema, HackathonSchema);
 
 var Users = mongoose.model("users", UsersSchema);
+var Hackathons = mongoose.model("hackathons", HackathonSchema);
 
-export {Users};
+export {Users, Hackathons};
 
 export default db;
