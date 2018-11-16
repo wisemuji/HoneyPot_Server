@@ -2,25 +2,47 @@ module.exports = (app, Users, passport, rndstring)=>{
   app.use(passport.initialize());
   app.use(passport.session());
 
-  app.post('/signup', async(req,res)=>{
-    console.log('post:signup');
-    var user = new Users(req.body);
-    user.token = rndstring.generate(40);
-    try {
-      var result = await user.save();
-    }catch(e){
-      if(e instanceof user_duplicate) return res.status(409).json({message:"already exist"});
-      if(e instanceof ValidationError) return res.status(400).json({message: e.message});
-      if(e instanceof paramsError) return res.status(400).json({message: e.message});
-    }
-    res.status(200).json(user);
+  app.post('/signin', function (req, res, next) {
+    passport.authenticate('signin', function (error, user, info) {
+      // this will execute in any case, even if a passport strategy will find an error
+      // log everything to console
+      console.log(error);
+      console.log(user);
+      console.log(info);
+
+      if (error) {
+        res.status(401).send(error);
+      } else if (!user) {
+        res.status(401).send(info);
+      } else {
+        res.status(200).json(user);
+      }
+      res.status(401).send(info);
+    })(req, res);
+    // successRedirect : '/',
+    // failureRedirect : '/', //가입 실패시 redirect할 url주소
   })
-  .post('/signin', async(req,res)=>{
-    console.log('post:signin');
-    var result = await Users.findOne(req.body)
-    if(!result) return res.status(404).json({message : "Not Found"})
-    else return res.status(200).json(result)
+
+  .post('/signup', function (req, res, next) {
+    // call passport authentication passing the "local" strategy name and a callback function
+    passport.authenticate('signup', function (error, user, info) {
+      // this will execute in any case, even if a passport strategy will find an error
+      // log everything to console
+      console.log(error);
+      console.log(user);
+      console.log(info);
+
+      if (error) {
+        res.status(401).send(error);
+      } else if (!user) {
+        res.status(401).send(info);
+      } else {
+        res.status(200).json(user);
+      }
+      res.status(401).send(info);
+    })(req, res);
   })
+
   .post('/delUser', async (req,res)=>{
     console.log('post:delUser');
     var result = await Users.deleteOne({token : req.body.token})

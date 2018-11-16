@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //module setting
 import { Users, Hackathons } from './mongo';
-let passport = require('./passport')(Users);
+let passport = require('./passport')(Users, rndstring);
 
 //라우터
 // let auth = require('./routes/auth/auth')(app);
