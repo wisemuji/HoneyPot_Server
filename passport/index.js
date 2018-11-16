@@ -20,6 +20,12 @@ module.exports = (Users, rndstring) => {
     },
       async(req, email, password, done)=>{
         console.log('post:signup:passport');
+        Users.findOne({ 'email' : email }, function(err, user) {
+            if (err) return done(err);
+            if (user) {
+                return done({message:"같은 이메일이 존재합니다."},false);
+              }
+            });
         var user = new Users(req.body);
         user.token = rndstring.generate(40);
         try {
@@ -40,7 +46,7 @@ module.exports = (Users, rndstring) => {
       usernameField: 'email',
       passwordField: 'passwd',
       session: false, // 세션에 저장 여부
-  }, async function(email, passwd, done){
+  }, async (email, passwd, done)=>{
       console.log('post:signin:passport');
       var user = await Users.findOne({email: email, passwd: passwd}, {__v: 0, _id:0});
       if(!user) {return done({message:"아이디나 비밀번호가 틀렸습니다."},false);
